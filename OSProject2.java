@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package os.project2;
 
 import java.util.Scanner;
@@ -19,10 +14,11 @@ public class OSProject2 {
     static String sequence = new String();
     //number of page faults
     static int pageFault = 0;
+    //current page string
     static char page;
-    
+    //flag to check if pointer should point to 1st frame (queue rotation)
     static boolean flag = false;
-    
+    //scanner to get input from user
     Scanner sc = new Scanner(System.in);
     
     
@@ -34,19 +30,25 @@ public class OSProject2 {
         while(!sequence.isEmpty()){
             for(int pointer=0; pointer<numberOfFrames; pointer++)
             {
+                //make sure reference string is not empty
                 if(!sequence.isEmpty()){
                     
+                    //check if pointer finishes one complete cycle on queue
                     if(flag)
                     {
+                        //set pointer to 1st frame in queue
                         pointer=0;
                         flag = false;
                     }
+                    //load 1st page from reference string
                     page = sequence.charAt(0);
+                    //change queue of frames to string to check if page already exsists in queue
                     String test = new String(frame);
+                    //returns -1 if page doesn't exsist in the queue
                     int t = test.indexOf(page);  
 
                     //check if the frame is empty
-                    if(frame[pointer] == 0)
+                    if(frame[pointer] == 0 && t == -1)
                     {
                         //add page to frame
                         addPage(pointer);   
